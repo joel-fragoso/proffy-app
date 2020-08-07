@@ -1,17 +1,29 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { RectButton } from 'react-native-gesture-handler';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { View, Image, Text } from 'react-native';
 
 import landingImg from '../../assets/images/landing.png';
 import studyImg from '../../assets/images/icons/study.png';
 import giveClassImg from '../../assets/images/icons/give-classes.png';
 import purpleHeartImg from '../../assets/images/icons/heart.png';
 
+import api from '../../services/api';
+
 import styles from './styles';
 
 const Landing: React.FC = () => {
+  const [totalConnections, setTotalConnections] = useState(0);
+
   const { navigate } = useNavigation();
+
+  useEffect(() => {
+    api.get('/connections').then(response => {
+      const { total } = response.data;
+
+      setTotalConnections(total);
+    })
+  }, []);
 
   const handleNavigateToGiveClassesPage = useCallback(() => {
     navigate('GiveClasses');
@@ -45,7 +57,7 @@ const Landing: React.FC = () => {
         </RectButton>
       </View>
       <Text style={styles.totalConnections}>
-        Total de 200 conexões já realizadas {' '}
+        Total de {totalConnections} conexões já realizadas {' '}
         <Image source={purpleHeartImg} />
       </Text>
     </View>

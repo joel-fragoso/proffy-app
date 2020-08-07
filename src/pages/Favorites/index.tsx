@@ -1,7 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 
 import PageHeader from '../../components/PageHeader';
+import TeacherItem from '../../components/TeacherItem/inde';
 
 import styles from './styles';
 
@@ -9,6 +10,17 @@ const Favorites: React.FC = () => {
   return (
     <View style={styles.container}>
       <PageHeader title="Meus proffys favoritos" />
+      <ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 16,
+          paddingBottom: 260,
+        }}
+        style={styles.teacherList}
+      >
+        <TeacherItem />
+        <TeacherItem />
+        <TeacherItem />
+      </ScrollView>
     </View>
   );
 };
